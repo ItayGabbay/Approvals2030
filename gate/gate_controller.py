@@ -68,3 +68,5 @@ def unauthorized(ttl=2):
     GATE_SERIAL.write(bytes('r', encoding='ASCII'))
     sleep(ttl)
     GATE_SERIAL.write(bytes('o', encoding='ASCII'))
+
+take_car_num()
