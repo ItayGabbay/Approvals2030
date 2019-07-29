@@ -23,6 +23,7 @@ from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, Rege
 
 import logging
 import requests
+import jsonpickle
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -79,6 +80,7 @@ def description(bot, update, user_data):
     user = update.message.from_user
     user_data['description'] = update.message.text
     user_data['user'] = user
+    user_data['chat_id'] = update.message.chat_id
     logger.info("Description of %s: %s", user.first_name, update.message.text)
     process_data(user_data)
 
@@ -90,10 +92,12 @@ def process_data(user_data):
         'photo':  user_data['photo'].download_as_bytearray(),
         'user': user_data['user'],
         'description': user_data['description'],
-        'plate': user_data['plate'] if 'plate' in user_data else None
+        'plate': user_data['plate'] if 'plate' in user_data else None,
+        'chat_id': user_data['chat_id']
     }
-
-    print(body)
+    
+    url = 'http://10.104.236.26:8080/api/AddEntryPermit'
+    requests.post(url, data=jsonpickle.encode(body))
     return body
 
 def cancel(bot, update):
