@@ -34,6 +34,7 @@ def take_face(camera_index: int = 1): #blocking
 
 def gate_open(ttl=4):
     sleep(2)
+    playsound('yes.mp3', block=False)
     GATE_SERIAL.write(bytes('g', encoding='ASCII'))
     GATE_SERIAL.write(bytes('0', encoding='ASCII'))  # open
     sleep(ttl)
