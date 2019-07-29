@@ -3,4 +3,4 @@ opencv
 requests
 json
 logging
-cv2
+opencv
