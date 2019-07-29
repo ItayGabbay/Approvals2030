@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import cv2
-
+import numpy as np
 CONST_MARGINS = 70
 
-def extract_face(frame: bytearray):
-    img = cv2.imdecode(frame, 0)
+def extract_face(frame: bytes):
+    file_bytes = np.asarray(bytearray(frame), dtype=np.uint8)
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(
@@ -21,3 +22,6 @@ def extract_face(frame: bytearray):
         sub_face = img[y-CONST_MARGINS:y + h + CONST_MARGINS, x-CONST_MARGINS:x + w + CONST_MARGINS]
         return sub_face
     return None
+
+if __name__ == '__main__':
+    pass

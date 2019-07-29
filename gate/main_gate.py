@@ -4,6 +4,7 @@ from gate.gate_controller import *
 import os
 import requests
 import cv2
+import jsonpickle
 
 MAIN_SERVER_HOST = os.getenv('GATE_SERVICE_ADDR', 'http://127.0.0.1')
 MAIN_SERVER_REQUEST = f'{MAIN_SERVER_HOST} + /getAuth'
@@ -17,7 +18,7 @@ def get_auth(face, license_number) -> bool:
         'license_number': license_number
     }
 
-    res = requests.post(MAIN_SERVER_HOST, data=data)
+    res = requests.post(MAIN_SERVER_HOST, data=jsonpickle.encode(data))
     if res.status_code != 200:
         return False
     res_content = loads(res.content)
@@ -25,7 +26,6 @@ def get_auth(face, license_number) -> bool:
 
 
 #get_auth = lambda *a, **kw: False
-
 
 def main():
     while True:
