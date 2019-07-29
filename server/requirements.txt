@@ -1,2 +1,2 @@
 psycopg2
-opencv
+opencv-python

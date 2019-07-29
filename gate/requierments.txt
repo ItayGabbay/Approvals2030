@@ -1,6 +1,5 @@
 pyserial
-opencv
+opencv-python
 requests
 json
 logging
-opencv
