@@ -11,10 +11,10 @@ FACE_CAMERA_INDEX = 0
 CAR_CAMERA_INDEX = 1
 
 
-def get_auth(face_img, car_num) -> bool:
+def get_auth(face, license_number) -> bool:
     data = {
-        'face': face_img,
-        'car_num': car_num
+        'face': face,
+        'license_number': license_number
     }
 
     res = requests.post(MAIN_SERVER_HOST, data=data)
@@ -29,14 +29,14 @@ def get_auth(face_img, car_num) -> bool:
 
 def main():
     while True:
-        face_img = take_face(FACE_CAMERA_INDEX)
-        car_num = take_car_num()
+        face = take_face(FACE_CAMERA_INDEX)
+        license_number = take_car_num()
 
-        cv2.imwrite('face.jpg', face_img)
-        print(car_num)
+        cv2.imwrite('face.jpg', face)
+        print(license_number)
 
         try:
-            is_auth = get_auth(face_img, car_num)
+            is_auth = get_auth(face, license_number)
             if is_auth:
                 gate_open()
             else:

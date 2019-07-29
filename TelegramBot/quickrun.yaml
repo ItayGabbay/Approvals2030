@@ -1,0 +1,2 @@
+steps:
+  - cmd: approval2030.azurecr.io/app/telegrambot:v1
