@@ -25,8 +25,7 @@ app.controller('contr',  ['$scope', '$http', function($scope, $http) {
     });
 
     $scope.update_approval = function(approval_id, is_authorized) {
-        $http.get('api/updateApproval?id=' + approval_id + "&is_authorized=" + (is_authorized=='True')).then(function(res) {
-            $scope.approvals = res.data;
+        $http.get('api/updateApproval?id=' + approval_id + "&is_authorized=" + is_authorized).then(function(res) {
         }, function (err) {
             console.log(err);
         });

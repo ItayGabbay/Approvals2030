@@ -85,9 +85,9 @@ def get_all_persons(request):
 @csrf_exempt
 def update_approval(request):
     id = request.GET.get('id')
-    is_authorized = request.GET.get('is_authorized')
+    is_authorized = request.GET.get('is_authorized') == 'true'
 
-    appr = Approvals.object.filter(id=id)
+    appr = Approvals.objects.get(id=id)
     appr.is_authorized = is_authorized
     appr.save()
     
