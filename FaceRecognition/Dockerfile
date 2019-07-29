@@ -34,9 +34,9 @@ ADD * /
 RUN pip3 install -r /requirements.txt
 
 ENV FLASK_APP=server.py
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
 
 EXPOSE 8080
 CMD ["flask","run", "--host=0.0.0.0", "-p 8080"]
