@@ -4,10 +4,14 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 import jsonpickle
 import cv2
+import numpy as np
 from random import getrandbits
 
-from .models import Approvals
 from .utils import *
+from .models import Approvals
+
+
+
 
 
 @csrf_exempt
@@ -30,12 +34,14 @@ def add_entry_permit(request):
 
 
 @require_POST
-def validate_erson(request):
-    face = request.POST.get('face'),
-    license_number = request.POST.get('license_number')
+def validate_person(request):
+    body = decode_body(request)
+    face = np.array(body.POST.get('face'))
+    license_number = body.POST.get('license_number')
 
     try:
-        person = Approvals.objects.get(license_number=license_number)
+        person = Approvals.objects.filter(license_number=license_number, is_authorized=True).values('picture')
     except:
         return HttpResponse(False)
+
     return HttpResponse(True)
