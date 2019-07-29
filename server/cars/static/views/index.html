@@ -5,7 +5,7 @@
         <h4>{{approval.name}}</h4>
         <h6>Number: {{approval.license_number}}</h6>
         <h6 class="in-b">Authorize:</h6>
-        <input type="checkbox" ng-model="approval.is_authorized" ng-change="update_approval(approval.id)"
+        <input type="checkbox" ng-model="approval.is_authorized" ng-change="update_approval(approval.id, approval.is_authorized)"
          style="vertical-align: middle">
     </div>
 </div>

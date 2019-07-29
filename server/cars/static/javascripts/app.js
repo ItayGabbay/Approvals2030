@@ -16,10 +16,19 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
 });
 
 app.controller('contr',  ['$scope', '$http', function($scope, $http) {
-    $scope.apprs = [{'id':1}];
+    $scope.apprs = [];
+    
     $http.get('api/getAllPersons').then(function(res) {
         $scope.approvals = res.data;
     }, function (err) {
         console.log(err);
-    });     
+    });
+
+    $scope.update_approval = function(approval_id, is_authorized) {
+        $http.get('api/updateApproval?id=' + approval_id + "&is_authorized=" + (is_authorized=='True')).then(function(res) {
+            $scope.approvals = res.data;
+        }, function (err) {
+            console.log(err);
+        });
+    }
 }]);
