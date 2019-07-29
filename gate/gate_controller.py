@@ -6,9 +6,11 @@ import os
 
 GATE_SERIAL = serial.Serial(os.getenv('GATE_PORT', 'COM4'), 9600, timeout=0)
 
+def take_car_num(camera_index: int = 0) -> str:
+    return '12345678'
+
 
 def take_face(camera_index: int = 1): #blocking
-
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
     video_capture = cv2.VideoCapture(camera_index)
 
