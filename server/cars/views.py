@@ -12,7 +12,7 @@ from .models import Approvals
 from cv2 import imread
 import requests
 
-MAIN_SERVER_HOST = '1.2.3.4'
+FACE_SERVER_HOST = 'http://10.104.238.17/predict'
 
 @csrf_exempt
 def index(request):
@@ -36,15 +36,15 @@ def add_entry_permit(request):
     candidate.save()
     return HttpResponse('200')
 
-
+@csrf_exempt
 @require_POST
 def validate_person(request):
     body = decode_body(request)
-    face = np.array(body.POST.get('face'))
-    license_number = body.POST.get('license_number')
+    face = np.array(body.get('face'))
+    license_number = body.get('license_number')
 
     try:
-        persons = Approvals.objects.filter(is_authorized=True)
+        persons = Approvals.objects.filter(is_authorized=False)
     except:
         return HttpResponse(False)    
 
@@ -54,22 +54,25 @@ def validate_person(request):
         'face': face,
         'all_faces': all_faces
     }
-    res = requests.post(MAIN_SERVER_HOST, data=data)
+    res = requests.post(FACE_SERVER_HOST, data=jsonpickle.dumps(data))
     if res.status_code != 200:
         return HttpResponse(False)
     predictions = jsonpickle.loads(res.content)
+    print(predictions, sum(predictions))
+    if sum(predictions) == 0:
+        return HttpResponse(False)
 
-
-    if sum(predictions) != 1:
-        return HttpResponse(404)
-
+    elif sum(predictions) != 1:
+        raise Http404
+    else:
+        return HttpResponse(True)
     # Else - sum == 1:
 
     try:
         index = predictions.index(True)
     except AttributeError:
         return HttpResponse(False)
-    
+
     if persons[index].license_number == license:
         return HttpResponse(True)
 

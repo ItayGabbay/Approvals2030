@@ -3,7 +3,7 @@ import jsonpickle
 import cv2
 import numpy as np
 import os
-CONST_MARGINS = 70
+CONST_MARGINS = 40
 
 def extract_face(frame: bytes):
     face_cascade = cv2.CascadeClassifier(os.path.join(os.path.dirname(__file__), 'haarcascade_frontalface_alt.xml'))

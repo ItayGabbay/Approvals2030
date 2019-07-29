@@ -6,8 +6,8 @@ import requests
 import cv2
 import jsonpickle
 
-MAIN_SERVER_HOST = os.getenv('GATE_SERVICE_ADDR', 'http://127.0.0.1')
-MAIN_SERVER_REQUEST = f'{MAIN_SERVER_HOST} + /getAuth'
+MAIN_SERVER_HOST = os.getenv('GATE_SERVICE_ADDR', 'http://127.0.0.1:8080')
+MAIN_SERVER_REQUEST = f'{MAIN_SERVER_HOST}/api/validatePerson'
 FACE_CAMERA_INDEX = 0
 CAR_CAMERA_INDEX = 1
 
@@ -18,14 +18,12 @@ def get_auth(face, license_number) -> bool:
         'license_number': license_number
     }
 
-    res = requests.post(MAIN_SERVER_HOST, data=jsonpickle.encode(data))
+    res = requests.post(MAIN_SERVER_REQUEST, data=jsonpickle.encode(data))
+    print(res.content)
     if res.status_code != 200:
-        return False
-    res_content = loads(res.content)
-    return bool(res_content['auth'])
+        raise ValueError
 
-
-#get_auth = lambda *a, **kw: False
+    return res.content == b'True'
 
 def main():
     while True:
@@ -33,7 +31,6 @@ def main():
         license_number = take_car_num()
 
         cv2.imwrite('face.jpg', face)
-        print(license_number)
 
         try:
             is_auth = get_auth(face, license_number)
