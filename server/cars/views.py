@@ -90,7 +90,6 @@ def update_approval(request):
     appr = Approvals.objects.get(id=id)
     appr.is_authorized = is_authorized
     appr.save()
-    
     BOT_API_KEY = '951740858:AAHDXXwE0dYA3UTXQnetnPq5D2FWlWqKqw4'
     MY_CHANNEL_NAME = appr.chat_id
     if is_authorized:
@@ -99,6 +98,4 @@ def update_approval(request):
     else:
         MY_MESSAGE_TEXT = 'Sorry, You are not authorized'
         requests.get('https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s' % (BOT_API_KEY, MY_CHANNEL_NAME, MY_MESSAGE_TEXT))
-
-
     return HttpResponse(200)

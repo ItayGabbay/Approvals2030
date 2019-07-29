@@ -35,7 +35,3 @@ def search_plates(image):
     if len(ret_plates) == 0:
         return  None
     return ret_plates[0]
-
-if __name__ == '__main__':
-    im = cv2.imread('p2.jpg')
-    print(search_plates(im))
