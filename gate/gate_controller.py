@@ -8,9 +8,14 @@ from gate.text_recognition import search_plates
 
 GATE_SERIAL = serial.Serial(os.getenv('GATE_PORT', 'COM4'), 9600, timeout=0)
 
-def take_car_num(camera_index: int = 1) -> str:
+
+def take_car_num(camera_index: int = 1, ttl: int = 10) -> str:
     video_capture = cv2.VideoCapture(camera_index)
-    while True:
+
+    if ttl is False:
+        ttl = 100000000
+
+    for i in range(ttl):
         # Capture frame-by-frame
         ret, frame = video_capture.read()
         plate = search_plates(frame)
@@ -19,8 +24,10 @@ def take_car_num(camera_index: int = 1) -> str:
             video_capture.release()
             cv2.destroyAllWindows()
             return plate
+    return ''
 
-def take_face(camera_index: int = 0): #blocking
+
+def take_face(camera_index: int = 0):  # blocking
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
     video_capture = cv2.VideoCapture(camera_index)
 
@@ -39,6 +46,7 @@ def take_face(camera_index: int = 0): #blocking
             video_capture.release()
             cv2.destroyAllWindows()
             return frame
+
 
 def gate_open(ttl=4):
     sleep(2)
@@ -63,6 +71,7 @@ def unauthorized(ttl=2):
     GATE_SERIAL.write(bytes('r', encoding='ASCII'))
     sleep(ttl)
     GATE_SERIAL.write(bytes('o', encoding='ASCII'))
+
 
 if __name__ == '__main__':
     take_car_num()
