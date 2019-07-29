@@ -7,6 +7,7 @@ import os
 GATE_SERIAL = serial.Serial(os.getenv('GATE_PORT', 'COM4'), 9600, timeout=0)
 
 def take_car_num(camera_index: int = 0) -> str:
+    # TODO: change to real code
     return '12345678'
 
 
