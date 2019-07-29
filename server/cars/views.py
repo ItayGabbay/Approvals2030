@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators.http import require_POST
+from .utils import *
 
-# Create your views here.
+@require_POST
+def add_entry_permit(request):
+    return HttpResponse('raz')
