@@ -3,6 +3,7 @@ import serial
 from time import sleep
 import cv2
 import os
+from playsound import playsound
 
 GATE_SERIAL = serial.Serial(os.getenv('GATE_PORT', 'COM4'), 9600, timeout=0)
 
@@ -49,6 +50,7 @@ def unrecognized(ttl=2):
 
 def unauthorized(ttl=2):
     sleep(2)
+    playsound('nope.mp3', block=False)
     GATE_SERIAL.write(bytes('r', encoding='ASCII'))
     sleep(ttl)
     GATE_SERIAL.write(bytes('o', encoding='ASCII'))
