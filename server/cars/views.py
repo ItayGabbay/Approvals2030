@@ -28,7 +28,7 @@ def add_entry_permit(request):
     if img is None:
         raise Http404
 
-    filename =  os.path.join(os.path.dirname(__file__), 'static', 'images', 'face-{}-{}.jpeg'.format(data['user']['first_name'], str(getrandbits(20))))
+    filename =  os.path.join('static', 'images', 'face-{}-{}.jpeg'.format(data['user']['first_name'], str(getrandbits(20))))
     cv2.imwrite(filename, img)
     candidate = Approvals(name=data['user']['first_name'],
                           license_number=data['plate'],
@@ -46,11 +46,11 @@ def validate_person(request):
     license_number = body.get('license_number')
 
     try:
-        persons = Approvals.objects.filter(is_authorized=False)
+        persons = Approvals.objects.filter(is_authorized=True)
     except:
         return HttpResponse(False)    
 
-    all_faces = [imread(p.picture) for p in persons]
+    all_faces = [imread(os.path.dirname(__file__) + '\\p.picture') for p in persons]
 
     data= {
         'face': face,
