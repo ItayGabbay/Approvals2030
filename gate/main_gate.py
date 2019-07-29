@@ -21,17 +21,10 @@ def get_auth(face_img, car_img) -> bool:
     return bool(res_content['auth'])
 
 
-
 def main():
     while True:
-
-        input('press to take face image')
-        face = take_picture()
+        face = take_face()
         cv2.imwrite('face.jpg', face)
-
-        input('press to take car image')
-        car = take_picture()
-        cv2.imwrite('car.jpg', car)
 
         try:
             is_auth = get_auth(face, car)
@@ -45,4 +38,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    #main()
+    face = take_face(0)
+    cv2.imwrite('face.jpg', face)
