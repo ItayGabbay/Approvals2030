@@ -32,6 +32,8 @@ def search_plates(image):
                 data = ''.join(list(filter(lambda x: x.isdigit(), data)))
                 if len(data) in [7, 8]:
                     ret_plates.append(data)
+            elif res.status_code == 403:
+                raise Exception('replace ocr token')
     if len(ret_plates) == 0:
         return  None
     return ret_plates[0]

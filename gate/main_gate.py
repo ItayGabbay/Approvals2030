@@ -14,6 +14,7 @@ CAR_CAMERA_INDEX = 1
 
 
 def get_auth(face, license_number) -> bool:
+    print(license_number)
     data = {
         'face': face,
         'license_number': license_number
