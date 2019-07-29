@@ -6,3 +6,4 @@ class Approvals(models.Model):
     license_number = models.CharField(max_length=10)
     description = models.CharField(max_length=100)
     picture = models.TextField()
+    is_authorized = models.BooleanField(default=False)
