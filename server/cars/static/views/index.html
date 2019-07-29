@@ -1,0 +1,29 @@
+<h3 style="padding: 0.3em">Approvals</h3>
+<div ng-repeat="approval in approvals" class="approval">
+    <img src="{{approval.picture}}" class="face">
+    <div class="in-b">
+        <h4>{{approval.name}}</h4>
+        <h6>Number: {{approval.license_number}}</h6>
+        <h6 class="in-b">Authorize:</h6>
+        <input type="checkbox" ng-model="approval.is_authorized" ng-change="update_approval(approval.id, approval.is_authorized)"
+         style="vertical-align: middle">
+    </div>
+</div>
+<style>
+    .in-b {
+        display: inline-block;
+    }
+    .approval {
+        display: inline-block;
+        border: solid red 1px;
+        border-radius: 5px;
+        padding: 0.7em;
+        margin: 1.3em;
+    }
+    .face {
+        float: left;
+        margin-right: 0.7em;
+        width: 70px;
+        max-height: 100%;
+    }
+</style>

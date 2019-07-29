@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.template import loader
 import jsonpickle
 import cv2
 import numpy as np
@@ -16,7 +17,8 @@ FACE_SERVER_HOST = 'http://face-recognition.westeurope.cloudapp.azure.com:8080/p
 
 @csrf_exempt
 def index(request):
-    return 200
+    template = loader.get_template("index.html")
+    return HttpResponse(template.render({}, request))
 
 @csrf_exempt
 @require_POST
@@ -72,3 +74,31 @@ def validate_person(request):
         return HttpResponse(False)
     else:
         return HttpResponse(True)
+
+    return HttpResponse(False)
+
+@csrf_exempt
+def get_all_persons(request):
+    return HttpResponse(jsonpickle.encode(list(Approvals.objects.all()), unpicklable=False))
+
+
+@csrf_exempt
+def update_approval(request):
+    id = request.GET.get('id')
+    is_authorized = request.GET.get('is_authorized')
+
+    appr = Approvals.object.filter(id=id)
+    appr.is_authorized = is_authorized
+    appr.save()
+    
+    BOT_API_KEY = '951740858:AAHDXXwE0dYA3UTXQnetnPq5D2FWlWqKqw4'
+    MY_CHANNEL_NAME = 
+    if is_authorized:
+        MY_MESSAGE_TEXT = 'You are authorized now!'
+        requests.get('https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s' % (BOT_API_KEY, MY_CHANNEL_NAME, MY_MESSAGE_TEXT))
+    else:
+        MY_MESSAGE_TEXT = 'Sorry, You are not authorized'
+        requests.get('https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s' % (BOT_API_KEY, MY_CHANNEL_NAME, MY_MESSAGE_TEXT))
+
+
+    return HttpResponse(200)
