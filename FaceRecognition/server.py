@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+import jsonpickle
 import face_recognition
 
 app = Flask(__name__)
@@ -7,10 +8,12 @@ app = Flask(__name__)
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
     if request.method == 'POST':
-        images = request.data
-        img1 = images[0]
-        images = [face_recognition.face_encodings(x) for x in images[1:]]
-        return face_recognition.compare_faces(images, img1)
+        images = jsonpickle.loads(request.data)
+        img1 = images['face']
+        all_images = [face_recognition.face_encodings(x)[0] for x in images['all_faces']]
+        result = jsonpickle.dumps(face_recognition.compare_faces(all_images, face_recognition.face_encodings(img1)[0]))
+        print(result)
+        return result
 
     elif request.method == 'GET':
         img1 = face_recognition.face_encodings(face_recognition.load_image_file('Carlton_Dotson_0001.jpg'))[0]
