@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+from django.template import loader
 import jsonpickle
 import cv2
 import numpy as np
@@ -16,7 +17,8 @@ FACE_SERVER_HOST = 'http://10.104.238.17/predict'
 
 @csrf_exempt
 def index(request):
-    return 200
+    template = loader.get_template("index.html")
+    return HttpResponse(template.render({}, request))
 
 @csrf_exempt
 @require_POST
@@ -77,3 +79,7 @@ def validate_person(request):
         return HttpResponse(True)
 
     return HttpResponse(False)
+
+@csrf_exempt
+def get_all_perssons(request):
+    return HttpResponse(jsonpickle.encode(list(Approvals.objects.all()), unpicklable=False))

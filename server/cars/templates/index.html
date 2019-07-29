@@ -1,0 +1,20 @@
+<html>
+    <head>    
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        {% load static %}
+        <script src='{% static "javascripts/app.js" %}' />
+        <link rel="stylesheet" href='{% static "css/app.css" %}' />
+    </head>
+    <body ng-app="approvals">
+        <h1>Unapproved</h1>
+        <!--div ng-repeat="approval in unapproved">
+            
+        </div-->
+        <h1>Approved</h1>
+        <div ng-repeat="approval in approvals">
+            
+        </div>
+    </body>
+</html>
