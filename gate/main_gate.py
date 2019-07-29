@@ -8,6 +8,7 @@ import jsonpickle
 
 MAIN_SERVER_HOST = os.getenv('GATE_SERVICE_ADDR', 'http://127.0.0.1:8080')
 MAIN_SERVER_REQUEST = f'{MAIN_SERVER_HOST}/api/validatePerson'
+
 FACE_CAMERA_INDEX = 0
 CAR_CAMERA_INDEX = 1
 

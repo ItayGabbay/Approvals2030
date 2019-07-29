@@ -60,22 +60,19 @@ def validate_person(request):
     if res.status_code != 200:
         return HttpResponse(False)
     predictions = jsonpickle.loads(res.content)
-    print(predictions, sum(predictions))
+
     if sum(predictions) == 0:
         return HttpResponse(False)
 
     elif sum(predictions) != 1:
         raise Http404
-    else:
-        return HttpResponse(True)
-    # Else - sum == 1:
 
-    try:
+    if license_number != '':
         index = predictions.index(True)
-    except AttributeError:
+        if persons[index].license_number == license:
+            return HttpResponse(True)
         return HttpResponse(False)
-
-    if persons[index].license_number == license:
+    else:
         return HttpResponse(True)
 
     return HttpResponse(False)
