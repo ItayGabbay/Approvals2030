@@ -4,7 +4,6 @@ from gate_controller import *
 import os
 import requests
 import cv2
-import logging
 MAIN_SERVER_HOST = os.getenv('GATE_SERVICE_ADDR', 'http://127.0.0.1')
 MAIN_SERVER_REQUEST = f'{MAIN_SERVER_HOST} + /getAuth'
 
@@ -36,13 +35,12 @@ def main():
 
         try:
             is_auth = get_auth(face, car)
-            logging.warning(f'auth attempt, success: {is_auth}')
             if is_auth:
                 gate_open()
             else:
                 unauthorized()
         except Exception as e:
-            logging.error(e)
+            print(e)
             unrecognized()
 
 
