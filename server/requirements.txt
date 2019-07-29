@@ -2,3 +2,4 @@ psycopg2
 opencv-python
 jsonpickle
 numpy
+django
