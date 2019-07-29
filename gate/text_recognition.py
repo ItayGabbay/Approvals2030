@@ -7,7 +7,7 @@ import requests
 import json
 import re
 
-OCR_API_KEY = '639c137f8c88957'
+OCR_API_KEY = '6db9fed6d988957'
 
 
 def search_plates(image):
@@ -32,6 +32,9 @@ def search_plates(image):
                 data = ''.join(list(filter(lambda x: x.isdigit(), data)))
                 if len(data) in [7, 8]:
                     ret_plates.append(data)
+            elif res.status_code == 403:
+                print(res.content)
+                raise Exception('replace ocr token')
     if len(ret_plates) == 0:
         return  None
     return ret_plates[0]

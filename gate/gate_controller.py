@@ -11,15 +11,12 @@ GATE_SERIAL = serial.Serial(os.getenv('GATE_PORT', 'COM4'), 9600, timeout=0)
 
 def take_car_num(camera_index: int = 1, ttl: int = 10) -> str:
     video_capture = cv2.VideoCapture(camera_index)
-
     if ttl is False:
         ttl = 100000000
-
     for i in range(ttl):
         # Capture frame-by-frame
         ret, frame = video_capture.read()
         plate = search_plates(frame)
-        print(plate)
         if plate is not None:
             video_capture.release()
             cv2.destroyAllWindows()
@@ -72,6 +69,4 @@ def unauthorized(ttl=2):
     sleep(ttl)
     GATE_SERIAL.write(bytes('o', encoding='ASCII'))
 
-
-if __name__ == '__main__':
-    take_car_num()
+take_car_num()

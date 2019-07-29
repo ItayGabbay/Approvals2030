@@ -67,16 +67,15 @@ def validate_person(request):
 
     elif sum(predictions) != 1:
         raise Http404
-
-    if license_number != '':
-        index = predictions.index(True)
+    index = predictions.index(True)
+    if license_number != '' and persons[index].license_number is not None:
         if persons[index].license_number == license:
             return HttpResponse(True)
         return HttpResponse(False)
     else:
         return HttpResponse(True)
 
-    return HttpResponse(False)
+
 
 @csrf_exempt
 def get_all_persons(request):
