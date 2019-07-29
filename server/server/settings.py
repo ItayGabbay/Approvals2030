@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'server',
         'USER': 'hack',
         'PASSWORD': 'Winners123456',
-        'HOST': '168.63.98.17',
+        'HOST': 'approvalpostgres.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
