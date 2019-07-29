@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import jsonpickle
 import cv2
 
 CONST_MARGINS = 70
@@ -21,3 +22,6 @@ def extract_face(frame: bytearray):
         sub_face = img[y-CONST_MARGINS:y + h + CONST_MARGINS, x-CONST_MARGINS:x + w + CONST_MARGINS]
         return sub_face
     return None
+
+def decode_body(request):
+    return jsonpickle.decode(request.body)
