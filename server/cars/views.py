@@ -28,7 +28,7 @@ def add_entry_permit(request):
     if img is None:
         raise Http404
 
-    filename =  os.path.join('static', 'images', 'face-{}-{}.jpeg'.format(data['user']['first_name'], str(getrandbits(20))))
+    filename =  os.path.join('static\\images\\face-{}-{}.jpeg'.format(data['user']['first_name'], str(getrandbits(20))))
     cv2.imwrite(filename, img)
     candidate = Approvals(name=data['user']['first_name'],
                           chat_id=data.get('chat_id'),
