@@ -4,15 +4,23 @@ from time import sleep
 import cv2
 import os
 from playsound import playsound
+from gate.text_recognition import search_plates
 
 GATE_SERIAL = serial.Serial(os.getenv('GATE_PORT', 'COM4'), 9600, timeout=0)
 
-def take_car_num(camera_index: int = 0) -> str:
-    # TODO: change to real code
-    return ''
+def take_car_num(camera_index: int = 1) -> str:
+    video_capture = cv2.VideoCapture(camera_index)
+    while True:
+        # Capture frame-by-frame
+        ret, frame = video_capture.read()
+        plate = search_plates(frame)
+        print(plate)
+        if plate is not None:
+            video_capture.release()
+            cv2.destroyAllWindows()
+            return plate
 
-
-def take_face(camera_index: int = 1): #blocking
+def take_face(camera_index: int = 0): #blocking
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
     video_capture = cv2.VideoCapture(camera_index)
 
@@ -55,3 +63,6 @@ def unauthorized(ttl=2):
     GATE_SERIAL.write(bytes('r', encoding='ASCII'))
     sleep(ttl)
     GATE_SERIAL.write(bytes('o', encoding='ASCII'))
+
+if __name__ == '__main__':
+    take_car_num()

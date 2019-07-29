@@ -30,9 +30,7 @@ def main():
     while True:
         face = take_face(FACE_CAMERA_INDEX)
         license_number = take_car_num()
-
         cv2.imwrite('face.jpg', face)
-
         try:
             is_auth = get_auth(face, license_number)
             if is_auth:

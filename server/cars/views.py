@@ -12,7 +12,7 @@ from .models import Approvals
 from cv2 import imread
 import requests
 
-FACE_SERVER_HOST = 'http://10.104.238.17/predict'
+FACE_SERVER_HOST = 'http://face-recognition.westeurope.cloudapp.azure.com:8080/predict'
 
 @csrf_exempt
 def index(request):
