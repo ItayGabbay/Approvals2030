@@ -4,3 +4,4 @@ requests
 json
 logging
 opencv
+playsound

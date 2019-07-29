@@ -10,6 +10,7 @@ MAIN_SERVER_REQUEST = f'{MAIN_SERVER_HOST} + /getAuth'
 FACE_CAMERA_INDEX = 0
 CAR_CAMERA_INDEX = 1
 
+
 def get_auth(face_img, car_num) -> bool:
     data = {
         'face': face_img,
@@ -22,12 +23,15 @@ def get_auth(face_img, car_num) -> bool:
     res_content = loads(res.content)
     return bool(res_content['auth'])
 
+
+#get_auth = lambda *a, **kw: False
+
+
 def main():
     while True:
-        face_img = take_face()
+        face_img = take_face(FACE_CAMERA_INDEX)
         car_num = take_car_num()
 
-        #TODO: not on prod
         cv2.imwrite('face.jpg', face_img)
         print(car_num)
 
