@@ -31,6 +31,7 @@ def add_entry_permit(request):
     filename =  os.path.join('static', 'images', 'face-{}-{}.jpeg'.format(data['user']['first_name'], str(getrandbits(20))))
     cv2.imwrite(filename, img)
     candidate = Approvals(name=data['user']['first_name'],
+                          chat_id=data.get('chat_id'),
                           license_number=data['plate'],
                           description=data['description'],
                           picture=filename,
