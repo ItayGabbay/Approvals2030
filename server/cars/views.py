@@ -78,5 +78,5 @@ def validate_person(request):
     return HttpResponse(False)
 
 @csrf_exempt
-def get_all_perssons(request):
+def get_all_persons(request):
     return HttpResponse(jsonpickle.encode(list(Approvals.objects.all()), unpicklable=False))

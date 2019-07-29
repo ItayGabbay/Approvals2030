@@ -3,18 +3,10 @@
 var app = angular.module('approvals', ['ngRoute']);
 
 
-app.controller('myCtrl', function($scope, $http) {
-    $http.get('api/getAllPerssons').then(function(res) {
-        $scope.approvals = res.data;
-    }, function (err) {
-        console.log(err);
-    });     
-});
-
-
 app.config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider.when('/', {
-        controller: 'myCtrl'
+        templateUrl: 'static/views/index.html',
+        controller: 'contr'
     })
      .otherwise({
         redirectTo: '/'
@@ -22,3 +14,12 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
 
      $locationProvider.hashPrefix('');
 });
+
+app.controller('contr',  ['$scope', '$http', function($scope, $http) {
+    $scope.apprs = [{'id':1}];
+    $http.get('api/getAllPersons').then(function(res) {
+        $scope.approvals = res.data;
+    }, function (err) {
+        console.log(err);
+    });     
+}]);
