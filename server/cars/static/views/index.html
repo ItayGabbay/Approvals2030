@@ -5,9 +5,9 @@
         <h4>{{approval.name}}</h4>
         <h6>Number: {{approval.license_number}}</h6>
         <h6 class="in-b">Authorize:</h6>
-         <input type="checkbox" id="cbx" style="display:none; "
+	<input type="checkbox" id="cbx{{approval.id}}" style="display:none; " class="cbx"
             ng-model="approval.is_authorized" ng-change="update_approval(approval.id, approval.is_authorized)"/>
-        <label for="cbx" class="toggle in-b" style="margin-bottom: -0.3em;"><span></span></label> 
+	<label for="cbx{{approval.id}}" class="toggle in-b cbx" style="margin-bottom: -0.3em;"><span></span></label> 
     </div>
 </div>
 <style>
@@ -82,16 +82,16 @@
         pointer-events: none;
     }
 
-    #cbx:checked + .toggle:before {
+    .cbx:checked + .toggle:before {
         background: #947ADA;
     }
-    #cbx:checked + .toggle span {
+    .cbx:checked + .toggle span {
         background: #4F2EDC;
         transform: translateX(20px);
         transition: all 0.2s cubic-bezier(0.8, 0.4, 0.3, 1.25), background 0.15s ease;
         box-shadow: 0 3px 8px rgba(79, 46, 220, 0.2);
     }
-    #cbx:checked + .toggle span:before {
+    .cbx:checked + .toggle span:before {
         transform: scale(1);
         opacity: 0;
         transition: all 0.4s ease;
