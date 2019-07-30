@@ -23,7 +23,6 @@ def get_auth(face, license_number) -> bool:
     print(res.content)
     if res.status_code != 200:
         raise ValueError
-
     return res.content == b'True'
 
 def main():
