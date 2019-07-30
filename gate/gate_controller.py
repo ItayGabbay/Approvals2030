@@ -17,6 +17,8 @@ def take_car_num(camera_index: int = 1, ttl: int = 10) -> str:
         # Capture frame-by-frame
         ret, frame = video_capture.read()
         plate = search_plates(frame)
+        if plate is False:
+            break
         if plate is not None:
             video_capture.release()
             cv2.destroyAllWindows()
@@ -68,5 +70,3 @@ def unauthorized(ttl=2):
     GATE_SERIAL.write(bytes('r', encoding='ASCII'))
     sleep(ttl)
     GATE_SERIAL.write(bytes('o', encoding='ASCII'))
-
-take_car_num()

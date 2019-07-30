@@ -33,8 +33,8 @@ def search_plates(image):
                 if len(data) in [7, 8]:
                     ret_plates.append(data)
             elif res.status_code == 403:
-                print(res.content)
-                raise Exception('replace ocr token')
+                print('replace ocr token', res.content)
+                return False
     if len(ret_plates) == 0:
         return  None
     return ret_plates[0]
