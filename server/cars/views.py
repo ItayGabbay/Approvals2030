@@ -51,7 +51,7 @@ def validate_person(request):
     except:
         return HttpResponse(False)    
 
-    all_faces = [imread(os.path.join(os.path.dirname(__file__), 'p.picture')) for p in persons]
+    all_faces = [imread(os.path.join(os.path.dirname(__file__), p.picture)) for p in persons]
 
     data= {
         'face': face,
@@ -61,7 +61,7 @@ def validate_person(request):
     if res.status_code != 200:
         return HttpResponse(False)
     predictions = jsonpickle.loads(res.content)
-
+    print(predictions)
     if sum(predictions) == 0:
         return HttpResponse(False)
 
